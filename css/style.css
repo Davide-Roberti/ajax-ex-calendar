@@ -11,6 +11,13 @@ ul {
     flex-wrap: wrap;
 }
 
+#settimana li {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #calendar li,
 #nome-mese {
     text-transform: capitalize;

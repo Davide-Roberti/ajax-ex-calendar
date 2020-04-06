@@ -79,7 +79,6 @@ $(document).ready(function () {
         var nomeMese = meseDaStampare.format('MMMM');
         $('#nome-mese').text(nomeMese); // Aggiorniamo il nome del mese in top calendar
         var giornoSettimanale = moment(meseDaStampare).isoWeekday()
-        console.log(giornoSettimanale);
         for (var i = 0; i < (giornoSettimanale - 1); i++) {
             $('#calendar').append('<li></li>');
         }
