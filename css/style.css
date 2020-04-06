@@ -6,9 +6,21 @@
     flex-direction: column;
 }
 
+ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 #calendar li,
 #nome-mese {
     text-transform: capitalize;
+}
+
+#calendar li {
+    border: 1px solid black;
+    list-style: none;
+    width: 200px;
+    height: 50px;
 }
 
 .festivo {
