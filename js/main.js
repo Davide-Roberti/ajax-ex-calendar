@@ -12,18 +12,42 @@ $(document).ready(function () {
     var mese = dataIniziale.month();
     stampaFestivi(mese);
 
+    var limiteIniziale = moment('2018-01-01');
+    var limiteFinale = moment('2018-12-31');
+    var limiteMese = moment('2018-11-30');
+
+    $('.mese-succ').prop('disabled', false);
+
     $('.mese-succ').click(function () {
+        $('.mese-prec').prop('disabled', false);
         dataIniziale.add(1, 'month');
-        var meseSelezionato = dataIniziale.month();
-        stampaGiorniMese(dataIniziale);
-        stampaFestivi(meseSelezionato);
+        if (dataIniziale.isSameOrAfter(limiteFinale)) {
+            alert('Hai provato ad hackerarmi! :( ');
+        } else if (dataIniziale.isAfter(limiteMese)) {
+            var meseSelezionato = dataIniziale.month();
+            stampaGiorniMese(dataIniziale);
+            stampaFestivi(meseSelezionato);
+            $('.mese-succ').prop('disabled', true);
+        } else {
+            var meseSelezionato = dataIniziale.month();
+            stampaGiorniMese(dataIniziale);
+            stampaFestivi(meseSelezionato);
+        }
     });
 
     $('.mese-prec').click(function () {
+        $('.mese-succ').prop('disabled', false);
+        if(dataIniziale.isSameOrBefore(limiteIniziale)){
+             alert('Hai provato ad hackerarmi! :( ');
+        } else {
         dataIniziale.subtract(1, 'month');
         var meseSelezionato = dataIniziale.month();
         stampaGiorniMese(dataIniziale);
         stampaFestivi(meseSelezionato);
+        if(dataIniziale.isSameOrBefore(limiteIniziale)) {
+           $('.mese-prec').prop('disabled', true);
+      }
+    }
     });
 
     function stampaFestivi(selectedMonth) {
@@ -48,26 +72,20 @@ $(document).ready(function () {
 
     function stampaGiorniMese(meseDaStampare) {
         $('#calendar').empty();
-        var controlloAnno = meseDaStampare.year();
-        if (controlloAnno == 2018) {
-            var standardDay = meseDaStampare.clone();
-            var giorniMese = meseDaStampare.daysInMonth();
-            var nomeMese = meseDaStampare.format('MMMM');
-            $('#nome-mese').text(nomeMese); // Aggiorniamo il nome del mese in top calendar
-            for (var i = 1; i <= giorniMese; i++) {
-                // $('#calendar').append('<li>' + i + ' ' + nomeMese + '</li>');
-                var giornoDaInserire = {
-                    day: i + ' ' + nomeMese,
-                    dataDay: standardDay.format('YYYY-MM-DD')
-                }
-                var templateFinale = templateGiorno(giornoDaInserire); // Stiamo popolando il template con i dati dell'oggetto
-                $('#calendar').append(templateFinale);
-                standardDay.add(1, 'day');
+        var standardDay = meseDaStampare.clone();
+        var giorniMese = meseDaStampare.daysInMonth();
+        var nomeMese = meseDaStampare.format('MMMM');
+        $('#nome-mese').text(nomeMese); // Aggiorniamo il nome del mese in top calendar
+        for (var i = 1; i <= giorniMese; i++) {
+            // $('#calendar').append('<li>' + i + ' ' + nomeMese + '</li>');
+            var giornoDaInserire = {
+                day: i + ' ' + nomeMese,
+                dataDay: standardDay.format('YYYY-MM-DD')
             }
-        } else {
-            alert('Errore');
+            var templateFinale = templateGiorno(giornoDaInserire); // Stiamo popolando il template con i dati dell'oggetto
+            $('#calendar').append(templateFinale);
+            standardDay.add(1, 'day');
         }
-
     }
 
 });
