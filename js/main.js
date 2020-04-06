@@ -6,6 +6,8 @@ $(document).ready(function () {
     // Stampare il mese di Gennaio 2018
     // Tramite click stampare il mese successivo
 
+
+
     var dataIniziale = moment('2018-01-01');
     stampaGiorniMese(dataIniziale); // Inizializzazione Calendario
 
@@ -21,16 +23,16 @@ $(document).ready(function () {
     $('.mese-succ').click(function () {
         $('.mese-prec').prop('disabled', false);
         dataIniziale.add(1, 'month');
+
         if (dataIniziale.isSameOrAfter(limiteFinale)) {
             alert('Hai provato ad hackerarmi! :( ');
         } else if (dataIniziale.isAfter(limiteMese)) {
             var meseSelezionato = dataIniziale.month();
-            stampaGiorniMese(dataIniziale);
+            stampaGiorniMese(dataIniziale, meseSelezionato);
             stampaFestivi(meseSelezionato);
             $('.mese-succ').prop('disabled', true);
         } else {
-            var meseSelezionato = dataIniziale.month();
-            stampaGiorniMese(dataIniziale);
+            stampaGiorniMese(dataIniziale, meseSelezionato);
             stampaFestivi(meseSelezionato);
         }
     });
@@ -42,7 +44,7 @@ $(document).ready(function () {
         } else {
         dataIniziale.subtract(1, 'month');
         var meseSelezionato = dataIniziale.month();
-        stampaGiorniMese(dataIniziale);
+        stampaGiorniMese(dataIniziale, meseSelezionato);
         stampaFestivi(meseSelezionato);
         if(dataIniziale.isSameOrBefore(limiteIniziale)) {
            $('.mese-prec').prop('disabled', true);
@@ -76,6 +78,11 @@ $(document).ready(function () {
         var giorniMese = meseDaStampare.daysInMonth();
         var nomeMese = meseDaStampare.format('MMMM');
         $('#nome-mese').text(nomeMese); // Aggiorniamo il nome del mese in top calendar
+        var giornoSettimanale = moment(meseDaStampare).isoWeekday()
+        console.log(giornoSettimanale);
+        for (var i = 0; i < (giornoSettimanale - 1); i++) {
+            $('#calendar').append('<li></li>');
+        }
         for (var i = 1; i <= giorniMese; i++) {
             // $('#calendar').append('<li>' + i + ' ' + nomeMese + '</li>');
             var giornoDaInserire = {

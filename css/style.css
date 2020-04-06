@@ -16,10 +16,10 @@ ul {
     text-transform: capitalize;
 }
 
-#calendar li {
+li {
     border: 1px solid black;
     list-style: none;
-    width: 200px;
+    width: 170px;
     height: 50px;
 }
 
